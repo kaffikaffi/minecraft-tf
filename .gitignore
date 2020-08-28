@@ -1,3 +1,4 @@
 .terraform
-.env
 terraform.tfvars
+terraform.tfstate.backup
+terraform.tfstate
