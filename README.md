@@ -25,7 +25,7 @@ Generate variable file
 ```
 touch terraform.tvars
 ```
-Paste the text below in  `terraform.tvars`, and replace the values with your Azure info   To generate this info you need to make a [Service Principal](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html).<b> DO NOT PUSH THIS FILE TO GITHUB! So make sure it is mentioned in your `.gitignore` file </b>
+Paste the text below in  `terraform.tvars`, and replace the values with your Azure info   To generate this info you need to make a [Service Principal](https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html).<b> DO NOT PUSH THIS FILE TO GITHUB! So make sure it is mentioned in your `.gitignore`</b>
 
 
 ```
@@ -34,8 +34,6 @@ client_id = "XXX XXX XXX XXX XXX"
 client_secret = "XXX XXX XXX XXX XXX"
 tenant_id  = "XXX XXX XXX XXX XXX"
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Deploy and make it live!
 
