@@ -19,3 +19,6 @@ variable "client_secret"{
 variable "tenant_id"{
     description = "Enter Tenant ID / Direcory ID of our Azure AD "
 }
+variable "storage_name"{
+    default = ["mcstorageborge"]
+}
