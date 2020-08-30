@@ -1,21 +1,20 @@
 resource "azurerm_resource_group" "minecraft" {
   name     = "minecraft-server"
-  location = "northeurope"
+  location = "UK South"
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = var.storage_name
+  name                     = "mymcstorage"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
-
 }
 
 resource "azurerm_storage_share" "mcdata" {
   name = "mcvolume"
   storage_account_name = azurerm_storage_account.minecraft.name
-  quota = 10
+  quota = 30 //How big the storage is
 }
 
 resource "azurerm_container_group" "minecraft" {
@@ -25,13 +24,13 @@ resource "azurerm_container_group" "minecraft" {
   ip_address_type     = "public"
   dns_name_label      = "minecraft-server"
   os_type             = "Linux"
-  restart_policy = "OnFailure" // Always Used in itzg documentation
+  restart_policy = "OnFailure" // "Always" Used in itzg documentation
 
   container {
-    name   = "first-minecraft-azure"
+    name   = "minecraft-server-tf"
     image = "itzg/minecraft-server"
-    cpu = "2"
-    memory = "3"
+    cpu = "4"
+    memory = "16"
 
     
     ports {
@@ -49,12 +48,15 @@ resource "azurerm_container_group" "minecraft" {
 
     environment_variables = {
       EULA="TRUE" //!IMPORTANT must have to start
-      VERSION="1.16.2"
-      MAX_PLAYERS="50"
+      MAX_PLAYERS="10"
       ALLOW_NETHER="true"
       GENERATE_STRUCTURES="true"
+      DIFFICULTY="hard"
+      OPS="DrMais" //Admins on the server
+      ICON="https://dreyerdigital.com/profile-pic.d8d9cd59.jpeg" //Image beside server in MC
       MOTD="Minecraft hostet i Azure <3"
-      MEMORY="3G"
+      VIEW_DISTANCE="15"
+      MEMORY="12G"
     }
   }
 }
