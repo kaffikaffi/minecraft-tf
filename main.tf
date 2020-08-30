@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "minecraft" {
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = var.storage_name
+  name                     = "ftbstorageborge" //This name should be changed to something relatable
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "minecraft" {
 resource "azurerm_storage_share" "mcdata" {
   name = "mcvolume"
   storage_account_name = azurerm_storage_account.minecraft.name
-  quota = 10
+  quota = 30
 }
 
 resource "azurerm_container_group" "minecraft" {
@@ -28,10 +28,10 @@ resource "azurerm_container_group" "minecraft" {
   restart_policy = "OnFailure" // Always Used in itzg documentation
 
   container {
-    name   = "first-minecraft-azure"
-    image = "itzg/minecraft-server"
-    cpu = "2"
-    memory = "3"
+    name   = "ftb-azure"
+    image = "itzg/minecraft-server:multiarch"
+    cpu = "4"
+    memory = "16"
 
     
     ports {
@@ -49,12 +49,13 @@ resource "azurerm_container_group" "minecraft" {
 
     environment_variables = {
       EULA="TRUE" //!IMPORTANT must have to start
-      VERSION="1.16.2"
-      MAX_PLAYERS="50"
+      TYPE="FTBA"
+      FTB_MODPACK_ID="11"
+      MAX_PLAYERS="5"
       ALLOW_NETHER="true"
       GENERATE_STRUCTURES="true"
-      MOTD="Minecraft hostet i Azure <3"
-      MEMORY="3G"
+      MOTD="Feed The Beast Lite 3 hostet i Azure! <3"
+      MEMORY="12G"
     }
   }
 }
