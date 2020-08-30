@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "minecraft" {
   name     = "minecraft-server"
-  location = "northeurope"
+  location = "West Europe" //UK South works best
 }
 
 resource "azurerm_storage_account" "minecraft" {
-  name                     = var.storage_name
+  name                     = "mcstorageborgeftb"
   resource_group_name      = azurerm_resource_group.minecraft.name
   location                 = azurerm_resource_group.minecraft.location
   account_tier             = "Standard"
@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "minecraft" {
 resource "azurerm_storage_share" "mcdata" {
   name = "mcvolume"
   storage_account_name = azurerm_storage_account.minecraft.name
-  quota = 10
+  quota = 15
 }
 
 resource "azurerm_container_group" "minecraft" {
@@ -28,10 +28,14 @@ resource "azurerm_container_group" "minecraft" {
   restart_policy = "OnFailure" // Always Used in itzg documentation
 
   container {
-    name   = "first-minecraft-azure"
-    image = "itzg/minecraft-server"
-    cpu = "2"
-    memory = "3"
+    name   = "feed-the-beast-direwolf"
+    image = "itzg/minecraft-server:multiarch"
+    cpu = "6"
+    memory = "24"
+    gpu {
+      count = "1"
+      sku = "K80"
+    }
 
     
     ports {
@@ -49,12 +53,11 @@ resource "azurerm_container_group" "minecraft" {
 
     environment_variables = {
       EULA="TRUE" //!IMPORTANT must have to start
-      VERSION="1.16.2"
-      MAX_PLAYERS="50"
-      ALLOW_NETHER="true"
-      GENERATE_STRUCTURES="true"
-      MOTD="Minecraft hostet i Azure <3"
-      MEMORY="3G"
+      TYPE="FTBA"
+      MAX_PLAYERS="5"
+      MOTD="Minecraft hostet i Azure! <3"
+      MEMORY="20G"
+      FTB_MODPACK_ID="31"
     }
   }
 }
