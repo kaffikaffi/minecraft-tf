@@ -27,7 +27,7 @@ resource "azurerm_container_group" "minecraft" {
   restart_policy = "OnFailure" // "Always" Used in itzg documentation
 
   container {
-    name   = "minecraft-server-tf"
+    name   = "minecraft-server-tf-az"
     image = "itzg/minecraft-server"
     cpu = "4"
     memory = "16"
@@ -49,14 +49,15 @@ resource "azurerm_container_group" "minecraft" {
     environment_variables = {
       EULA="TRUE" //!IMPORTANT must have to start
       MAX_PLAYERS="10"
+      TYPE="PAPER"
       ALLOW_NETHER="true"
       GENERATE_STRUCTURES="true"
       DIFFICULTY="hard"
       OPS="DrMais" //Admins on the server
       ICON="https://dreyerdigital.com/profile-pic.d8d9cd59.jpeg" //Image beside server in MC
       MOTD="Minecraft hostet i Azure <3"
-      VIEW_DISTANCE="15"
-      MEMORY="12G"
+      VIEW_DISTANCE="10"
+      MEMORY="14G"
     }
   }
 }
